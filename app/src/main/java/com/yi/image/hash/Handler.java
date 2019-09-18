@@ -41,9 +41,13 @@ public class Handler {
     }
 
     private static String getDHashByAndroid(Bitmap bitmap) {
+        //缩小尺寸
         Bitmap b = Resize.handleByAndroid(bitmap, 9, 8);
+        //获取图片数组
         int[] p = Utils.bitmap2intArray(b);
+        //灰度化
         p = ConvertGrey.handle(p, 9, 8);
+        //计算灰度差值
         String result = Difference.handle(p);
         return result;
     }
