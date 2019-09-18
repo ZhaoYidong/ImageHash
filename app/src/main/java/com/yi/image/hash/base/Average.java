@@ -14,14 +14,37 @@ package com.yi.image.hash.base;
  */
 public class Average {
 
-    public static int handle(int[] pixels) {
-        long sum = 0;
-        // 将数组元素转为无符号整数
+    public static String handle(int[] pixels) {
+        int average = average(pixels);
+        String result = binaryzation(pixels, average);
+        return result;
+    }
+
+    public static int average(int[] pixels) {
+        int sum = 0;
         for (int i = 0; i < pixels.length; i++) {
-            sum += (long) pixels[i] & 0xff;
+            sum += pixels[i];
         }
         int average = (Math.round(sum / pixels.length));
         return average;
+    }
+
+    private static String binaryzation(int[] pixels, int average) {
+        StringBuilder stringBuilder = new StringBuilder();
+        //遍历8*8像素点，记录与均值的大小关系，产生8*8=64个对比
+        for (int i = 0; i < pixels.length; i++) {
+            boolean d = Utils.compareGrey(pixels[i], average);
+
+//            //如果没有做灰度化，可比较每个色彩的差值，会相对更准确
+//            boolean largerThanNext = Utils.compareRGB(pixels[i], pixels[i + 1]);
+
+            if (d) {
+                stringBuilder.append("1");
+            } else {
+                stringBuilder.append("0");
+            }
+        }
+        return stringBuilder.toString();
     }
 
 }

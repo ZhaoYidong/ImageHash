@@ -46,4 +46,33 @@ public class Utils {
         return counter;
     }
 
+    public static boolean compareGrey(int current, int next) {
+        if (current > next) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean compareRGB(int current, int next) {
+        int result = 0;
+        byte aRed = (byte) (current >> 16 & 0xFF);
+        byte aGreen = (byte) (current >> 8 & 0xFF);
+        byte aBlue = (byte) (current & 0xFF);
+
+        byte bRed = (byte) (next >> 16 & 0xFF);
+        byte bGreen = (byte) (next >> 8 & 0xFF);
+        byte bBlue = (byte) (next & 0xFF);
+
+        if (Math.abs(Math.abs(aRed) - Math.abs(bRed)) > 5) {
+            result = result + 1;
+        }
+        if (Math.abs(Math.abs(aGreen) - Math.abs(bGreen)) > 5) {
+            result = result + 1;
+        }
+        if (Math.abs(Math.abs(aBlue) - Math.abs(bBlue)) > 5) {
+            result = result + 1;
+        }
+        return result >= 2;
+    }
+
 }
